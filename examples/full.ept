@@ -1,6 +1,6 @@
 % Encoding:         UTF-8
+% Record-Separator: auto-crlf
 % Column-Separator: |
-% Record-Separator: auto
 
 # The items table describes a set of items, which have an ID, a name, a price and
 # a remaining amount in the inventory.

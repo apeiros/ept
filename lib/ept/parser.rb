@@ -29,15 +29,15 @@ module Ept
     Separator = Hash.new { |hash, hex| # TODO: enable encodings; special case tab and space
       hash[hex] = /#{Regexp.escape([hex].pack("H*").force_encoding(Encoding::UTF_8))}/
     }.merge({
-      ';'     => /;/,
-      ','     => /,/,
-      '|'     => /\|/,
-      'tab'   => /\t/,
-      'auto'  => /\r?\n/,
-      'crlf'  => /\r\n/,
-      'lf'    => /\n/,
-      'tab'   => /\t/,
-      'none'  => nil,
+      ';'         => /;/,
+      ','         => /,/,
+      '|'         => /\|/,
+      'tab'       => /\t/,
+      'auto-crlf' => /\r?\n/,
+      'crlf'      => /\r\n/,
+      'lf'        => /\n/,
+      'tab'       => /\t/,
+      'none'      => nil,
     })
     Constructors = {
       date_time: Time.method(:mktime),
