@@ -10,9 +10,9 @@ Enhanced Plaintext Tables - better than CSV, with multiple tables per file, data
 #### Why should you use EPT instead of CSV?
 
 * Multiple tables within a single file
-* Explicit declaration of separators (no guessing whether it's ; or , in your parser anymore)
+* Explicit declaration of separators (no guessing whether it's ";", "," or something else)
 * Explicit declaration whether the first row is a header or not
-* Explicit declaration of encoding (no encoding guessing anymore)
+* Explicit declaration of encoding (no weird characters like "Ã¤" instead of "ä" anymore)
 * UTF-8 as default encoding
 * Typed values (Null, Boolean, Integer, Float, Decimal, Currency, Date, DateTime, String)
 * Type annotations for columns
@@ -51,7 +51,13 @@ A .ept file consists of
 * Empty lines between the tables (NOT allowed within tables)
 * Tables, with metadata
 
-An example of a an .ept file which makes use of all features:
+An example of a minimal .ept file which makes use of defaults:
+
+    First name | Last name | Secret Identity | Born       | Age | Fortune
+    Clark      | Kent      | Superman        | 1932-03-26 | 81  | 32_618.00$
+    Peter      | Parker    | Spiderman       | 1962-08-15 | 51  |    512.50$
+
+An example of an .ept file which makes use of all features:
 
     % Encoding: utf-8
     # This is a comment
@@ -69,9 +75,9 @@ An example of a an .ept file which makes use of all features:
     Integer, base 10     | -291
     Integer, base 8      | 0755
     Integer, base 2      | 0b01001100
-    Float                | -256.23e15
-    Decimal              | 123.456
-    Currency             | 123.50$
+    Float                | -4_256.23e15
+    Decimal              | 1_235.456
+    Currency             | 1_235.60$
     Date                 | 2013-09-31
     Time                 | 12:45:00
     DateTime             | 2013-09-31T12:45:00Z
