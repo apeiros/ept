@@ -1,0 +1,39 @@
+#!/usr/bin/env ruby
+
+lib_dir = File.expand_path('../../lib', __FILE__)
+$LOAD_PATH << lib_dir unless $LOAD_PATH.include?(lib_dir)
+
+require 'ept'
+require 'optparse'
+
+def usage
+  $stderr.puts "USAGE: #{$0} verify FILENAME"
+  exit 1
+end
+
+command = ARGV.shift
+case command
+  when "verify"
+    options = {silent: false}
+    OptionParser.new do |o|
+      o.on '-s', '--silent' do |v| options[:silent] = true end
+    end.parse!
+
+    file = ARGV.shift
+    usage unless ARGV.empty? && file
+
+    begin
+      Ept.read_file(file)
+    rescue Errno::ENOENT
+      puts "File #{file} not found or not readable" unless options[:silent]
+      exit 2
+    rescue Ept::SyntaxError
+      puts "File #{file} is not syntactically valid" unless options[:silent]
+      exit 3
+    else
+      puts "File #{file} is valid" unless options[:silent]
+      exit 0
+    end
+  when "help"
+    usage
+end
