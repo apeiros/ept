@@ -13,7 +13,7 @@ module Ept
         if column_separator
           /\p{Letter}(?:(?!#{column_separator}|#{record_separator})[^\\]|\\.)*/m
         else
-          /\p{Letter}(?:(?!#{record_separator})[^\\]|\\.)*/m
+          /\p{Letter}(?:(?!#{record_separator})[^\\ \t]|\\.)*/m
         end
       end
 
