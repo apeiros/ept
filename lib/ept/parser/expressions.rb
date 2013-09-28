@@ -27,7 +27,7 @@ module Ept
 
       RComment        = /[ \t]*\#[^\r\n]*/
 
-      RNil            = /\+null/                                 # Match nil
+      RNil            = /\+null|\-/                              # Match nil
 
       RFalse          = /\+false/                                # Match false
 

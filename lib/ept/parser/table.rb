@@ -65,9 +65,6 @@ module Ept
       def scan_value
         @scanner.scan(/[ \t]*/)
         case
-          when @scanner.scan(RNil)             then nil
-          when @scanner.scan(RTrue)            then true
-          when @scanner.scan(RFalse)           then false
           when @scanner.scan(RDateTime)        then @constructors[:date_time].call(@scanner[1], @scanner[2], @scanner[3], @scanner[4], @scanner[5], @scanner[6])
           when @scanner.scan(RDate)            then @constructors[:date].call(@scanner[1].to_i, @scanner[2].to_i, @scanner[3].to_i)
           when @scanner.scan(RTime)            then @constructors[:time].call(@scanner[1].to_i, @scanner[2].to_i, @scanner[3].to_i)
@@ -80,6 +77,9 @@ module Ept
           when @scanner.scan(RInteger)         then @scanner.matched.delete('^0-9-').to_i
           when @scanner.scan(RSString)         then @scanner.matched[1..-2].gsub(/\\'/, "'").gsub(/\\\\/, "\\")
           when @scanner.scan(RDString)         then @scanner.matched[1..-2].gsub(/\\(?:[0-3]?\d\d?|x[A-Fa-f\d]{2}|.)/) { |m| DStringEscapes[m] }
+          when @scanner.scan(RNil)             then nil
+          when @scanner.scan(RTrue)            then true
+          when @scanner.scan(RFalse)           then false
           when @scanner.scan(@bare_string)     then @scanner.matched.strip
           when @scanner.scan(@record_boundary) then :end_of_record
           else raise SyntaxError, "Unrecognized pattern: #{@scanner.rest.inspect}"
