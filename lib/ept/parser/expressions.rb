@@ -60,21 +60,22 @@ module Ept
       RDateTime       = /#{RDate}T#{RTime}/                      # Match a datetime
 
       # Map escape sequences in double quoted strings
-      DStringEscapes  = {
-        '\\\\' => "\\",
-        "\\'"  => "'",
-        '\\"'  => '"',
+      DStringEscapes  = {}
+      256.times do |i|
+        DStringEscapes["\\%o" % i]    = i.chr(Encoding::BINARY)
+        DStringEscapes["\\%03o" % i]  = i.chr(Encoding::BINARY)
+        DStringEscapes["\\x%02x" % i] = i.chr(Encoding::BINARY)
+        DStringEscapes["\\x%02X" % i] = i.chr(Encoding::BINARY)
+      end
+      32.upto(126) do |i|
+        DStringEscapes["\\#{i.chr(Encoding::BINARY)}"] = i.chr(Encoding::BINARY)
+      end
+      DStringEscapes.update({
         '\t'   => "\t",
         '\f'   => "\f",
         '\r'   => "\r",
         '\n'   => "\n",
-      }
-      256.times do |i|
-        DStringEscapes["\\%o" % i]    = i.chr
-        DStringEscapes["\\%03o" % i]  = i.chr
-        DStringEscapes["\\x%02x" % i] = i.chr
-        DStringEscapes["\\x%02X" % i] = i.chr
-      end
+      })
     end
   end
 end
