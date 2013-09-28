@@ -79,6 +79,20 @@ An example of a an .ept file which makes use of all features:
     Single Quoted String | 'Hello world!\nBackslash-n'
     Double Quoted String | "Hello world!\nAnother line"
 
+#### Defaults
+
+* Default encoding is utf-8
+* Default record separator is LF (linefeed, "\n", 0x0a)
+* Default column separator is "|" (0x7c)
+* Headers defaults to true
+* Types defaults to false
+* In ruby, the default name is nil
+* In ruby, Null is by default represented by nil
+* In ruby, Decimal is by default represented by BigDecimal
+* In ruby, Currency is by default represented by BigDecimal
+* In ruby, Date is by default represented by Date
+* In ruby, Time and DateTime are by default represented by Time
+
 
 Getting Started
 ---------------
