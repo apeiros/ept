@@ -2,8 +2,8 @@
 
 
 
-require 'strscan'
 require 'bigdecimal'
+require 'date'
 
 
 
@@ -50,41 +50,5 @@ module Ept
       hex:       Kernel.method(:Integer),
       binary:    Kernel.method(:Integer),
     }
-
-    attr_reader :processor, :source, :scanner, :state, :can_continue,
-                :properties, :encoding, :column_separator, :record_separator,
-                :table_head_pattern, :headers
-
-    def initialize(source='', properties=nil, &processor)
-      raise ArgumentError, "No block given" unless processor
-      @now                   = Time.now # needed for Time
-      @processor             = processor
-      @source                = source
-      @scanner               = StringScanner.new(@source)
-      @literals              = LiteralParser.new(@source, attach: @scanner, use_big_decimal: true)
-      @state                 = :encoding
-      @can_continue          = true
-      @properties            = DefaultProperties.dup
-      @encoding              = nil
-      @column_separator      = nil
-      @record_separator      = nil
-      @headers               = nil
-      @current_table         = nil
-      @big_decimal_converter = @use_big_decimal ? Kernel.method(:BigDecimal) : Kernel.method(:Float)
-    end
-
-
-    def process_properties
-      @encoding           = Encoding.find(@properties[:encoding])
-      @column_separator   = /#{Regexp.escape([@properties[:column_separator]].pack("H*").force_encoding(@encoding))}/
-      @record_separator   = /#{Regexp.escape([@properties[:record_separator]].pack("H*").force_encoding(@encoding))}/
-      @headers            = Boolean.fetch(@properties[:headers]) { raise "Illegal value for headers" }
-      @table_head_pattern = /#{TableHeadPattern}#{@record_separator}/
-      @current_table      = {
-        headers: @headers,
-        name:    nil,
-      }
-      @source.force_encoding(@encoding)
-    end
   end
 end

@@ -7,7 +7,7 @@ Summary
 
 Enhanced Plaintext Tables - better than CSV, with multiple tables per file, datatypes and more.
 
-### Why should you use EPT instead of CSV?
+#### Why should you use EPT instead of CSV?
 
 * Multiple tables within a single file
 * Explicit declaration of separators (no guessing whether it's ; or , in your parser anymore)
@@ -18,7 +18,7 @@ Enhanced Plaintext Tables - better than CSV, with multiple tables per file, data
 * Type annotations for columns
 * In-document comments
 
-### What does this library provide?
+#### What does this library provide?
 
 * A .ept-file parser
 * An EPT String parser
