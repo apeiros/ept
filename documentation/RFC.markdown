@@ -96,6 +96,7 @@ About bare_string
 The bare_string type depends on column_separator and record_separator. It may
 contain all available characters except the column_separator and the
 record_separator.
+Surrounding whitespace is stripped from a bare_string (spaces and tabs).
 
 
 Important initial defaults
