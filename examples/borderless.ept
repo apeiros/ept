@@ -1,6 +1,8 @@
 % Column-Separator: none
-ID  Name     Price   Inventory
-1   Watch     2.99   50
-2   Table   119.99   12
-3   Chair    49.99   19
-4   Plate     2.99   32
+ID  Name              Price   Inventory
+ 1  Watch              2.99   50
+ 2  Table            119.99   12
+ 3  Chair             49.99   19
+ 4  Plate              2.99   32
+ 5  Magic\ Potion  9_999.99    1
+ 6  "Holy Water"     666.00    6
