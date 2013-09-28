@@ -124,5 +124,5 @@ Links
 License
 -------
 
-You can use this code under the {file:LICENSE.txt BSD-2-Clause License}, free of charge.
+You can use this code under the [BSD-2-Clause License](LICENSE.txt), free of charge.
 If you need a different license, please ask the author.
