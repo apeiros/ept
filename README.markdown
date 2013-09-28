@@ -41,6 +41,45 @@ Usage
     tables = Ept.read_file('examples/full.ept')
 
 
+Format of a .ept file
+---------------------
+
+A .ept file consists of
+
+* Optional encoding header (must be the first line)
+* Comment lines (allowed between and within tables)
+* Empty lines between the tables (NOT allowed within tables)
+* Tables, with metadata
+
+An example of a an .ept file which makes use of all features:
+
+    % Encoding: utf-8
+    # This is a comment
+    % Name: the_table_name
+    % Record-Separator: LF
+    % Column-Separator: |
+    % Headers: true
+    % Types: false
+    Value type           | Example Value
+    Null                 | -
+    Null                 | +null
+    True                 | +true
+    False                | +false
+    Integer, base 16     | 0xff99cc
+    Integer, base 10     | -291
+    Integer, base 8      | 0755
+    Integer, base 2      | 0b01001100
+    Float                | -256.23e15
+    Decimal              | 123.456
+    Currency             | 123.50$
+    Date                 | 2013-09-31
+    Time                 | 12:45:00
+    DateTime             | 2013-09-31T12:45:00Z
+    Bare String          | Hello world!
+    Single Quoted String | 'Hello world!\nBackslash-n'
+    Double Quoted String | "Hello world!\nAnother line"
+
+
 Getting Started
 ---------------
 
