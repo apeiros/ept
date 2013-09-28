@@ -1,0 +1,68 @@
+(Draft)
+
+DOCUMENT          := ?DOCUMENT_ENCODING ?DOCUMENT_META +(?TABLE_META TABLE)
+DOCUMENT_ENCODING := "# Encoding:" +SPACING ENCODING_NAME NEWLINE
+DOCUMENT_META     := +(META_DATUM | EMPTY_LINE)
+META_DATUM        := "# " META_NAME ":" +SPACING META_VALUE NEWLINE
+META_NAME         := "Column-Separator" | "Record-Separator" | "Headers" | "Types"
+SPACING           := " " | "\t"
+NEWLINE           := "\r\n" | "\n"
+EMPTY_LINE        := SPACING NEWLINE
+
+DOCUMENT_ENCODING:
+  Defaults to 'UTF-8'
+  Valid: 'UTF-8', 'UTF-16-BE', 'UTF-16-LE', 'UTF-32-LE', 'UTF-32-BE',
+         'MacRoman', 'Windows-1252', …
+
+Column-Separator:
+  Either ";", ",", "|", "tab", "none"
+  Or the bytes in hexadecimal
+  Default: "|"
+
+Record-Separator:
+  Either: "lf", "crlf"
+  Or the bytes in hexadecimal
+  Default: "lf" (lf = Linefeed = "\n" = "\x0a", crlf = Carriage Return Line Feed = "\r\n" = "\x0d\x0a")
+
+Headers:
+  Valid: "true", "false"
+  Default: "true"
+
+Types:
+  Valid: "true", "false"
+  Default: "false"
+
+
+TABLE_META consists of: +(META_NAME ":" +SPACING META_VALUE)
+Valid META_NAME:
+* 'Name'
+* 'Column-Separator'
+* 'Record-Separator'
+* 'Headers'
+* 'Types'
+
+Name: table name
+All others use DOCUMENT_META as default
+
+TABLE consists of: ROW *SPACING RECORD_SEPARATOR
+ROW consists of: CELL *(*SPACING COLUMN_SEPARATOR *SPACING CELL)
+CELL consists of: NULL | TRUE | FALSE | INTEGER | DECIMAL | CURRENCY | FLOAT | DATE | DATETIME |
+                  DOUBLE_QUOTED_STRING | SINGLE_QUOTED_STRING | BARE_STRING
+
+NULL: "+null"
+TRUE: "+true"
+FALSE: "+false"
+INTEGER: ?("+" | "-") (INT_B16 | INT_B10 | INT_B8 | INT_B2)
+  INT_B16: "0x" +("0"-"9" | "A"-"F" | "a"-"f")
+  INT_B10: "1"-"9" *("0"-"9")
+  INT_B8:  "0" +("0"-"7")
+  INT_B2:  "0b" +("0" | "1")
+DECIMAL: ?("+" | "-") INT_B10 "." +("0"-"9")
+CURRENCY: DECIMAL "$"
+FLOAT: DECIMAL "e" DECIMAL
+DOUBLE_QUOTED_STRING: """ ESCAPED_STRING """ # differs in interpretation of ESCAPED_STRING from SINGLE_QUOTED_STRING
+SINGLE_QUOTED_STRING: "'" ESCAPED_STRING "'" # differs in interpretation of ESCAPED_STRING from DOUBLE_QUOTED_STRING
+DQ_ESCAPED_STRING: *(^""" "'" "\" | "\" .)
+BARE_STRING: ("A"-"Z" | "a"-"z") *(^"\" " " RECORD_SEPARATOR COLUMN_SEPARATOR | "\" .)
+DATE: YYYY-MM-DD
+DATETIME: YYYY-MM-DD"T"HH:MM:SS ?(OFFSET | TIMEZONE | "Z")
